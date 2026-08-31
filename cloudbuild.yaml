@@ -1,0 +1,37 @@
+# Cloud Build configuration for Agentic KB Factory
+# Builds and deploys to Cloud Run with scale-to-zero optimization
+
+steps:
+  # Step 1: Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/agentic-kb-factory:$SHORT_SHA'
+      - '.'
+
+  # Step 2: Push image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/agentic-kb-factory:$SHORT_SHA'
+
+  # Step 3: Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    args:
+      - 'run'
+      - '--filename=.'
+      - '--image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/agentic-kb-factory:$SHORT_SHA'
+      - '--location=us-central1'
+
+images:
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/agentic-kb-factory:$SHORT_SHA'
+
+substitutions:
+  _REGION: 'us-central1'
+  _REPOSITORY: 'agentic-kb-factory'
+
+options:
+  machineType: 'N1_HIGHCPU_8'
+  
+timeout: '1800s'

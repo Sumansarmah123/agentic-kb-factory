@@ -1,0 +1,100 @@
+/**
+ * Apple Design inspired styles for Agentic KB Factory
+ * Following principles from apple-design skill
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-slate-800;
+  }
+
+  body {
+    @apply bg-slate-950 text-white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Optical sizing - tighter tracking for large text */
+  h1, h2, h3 {
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  /* Comfortable leading for body text */
+  p {
+    line-height: 1.5;
+  }
+}
+
+@layer components {
+  /* Translucent material (Apple Design) */
+  .glass-panel {
+    @apply bg-slate-900/60 backdrop-blur-apple border border-slate-800/50;
+  }
+
+  /* Toolbar with blur */
+  .toolbar {
+    @apply fixed top-0 left-0 right-0 z-50;
+    @apply bg-slate-950/80 backdrop-blur-apple border-b border-slate-800/50;
+  }
+
+  /* Button with instant feedback */
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg font-medium;
+    @apply bg-teal-500 hover:bg-teal-400;
+    @apply transition-colors duration-150;
+    @apply active:scale-[0.97] transform;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 rounded-lg font-medium;
+    @apply bg-slate-800 hover:bg-slate-700;
+    @apply transition-colors duration-150;
+    @apply active:scale-[0.97] transform;
+  }
+
+  /* Status badges */
+  .badge-success {
+    @apply px-2 py-1 rounded-full text-xs font-medium bg-teal-500/20 text-teal-400;
+  }
+
+  .badge-error {
+    @apply px-2 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400;
+  }
+
+  .badge-warning {
+    @apply px-2 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400;
+  }
+}
+
+/* Reduced motion support (Apple Design accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-600;
+}
